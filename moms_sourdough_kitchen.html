@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mom's Sourdough Kitchen</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #faf6ef;
+    --warm-tan: #e8d5b7;
+    --brown: #8b6347;
+    --dark-brown: #5c3d2e;
+    --sage: #8a9e7e;
+    --dusty-rose: #c9a0a0;
+    --text: #3d2b1a;
+    --text-muted: #7a5c44;
+    --white: #fffdf9;
+  }
+
+  body {
+    font-family: 'Lora', serif;
+    background-color: var(--cream);
+    color: var(--text);
+    line-height: 1.75;
+    font-size: 16px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    background: var(--white);
+    border-bottom: 1.5px solid var(--warm-tan);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-style: italic;
+    color: var(--dark-brown);
+    letter-spacing: 0.01em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+    font-family: 'Lora', serif;
+  }
+
+  .nav-links a:hover { color: var(--dark-brown); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, #f5e8d0 0%, #ede0cc 60%, #e4d3be 100%);
+    padding: 5rem 2rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(201,160,160,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -60px;
+    width: 260px; height: 260px;
+    background: radial-gradient(circle, rgba(138,158,126,0.2) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--dusty-rose);
+    color: var(--white);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.35rem 1.2rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    color: var(--dark-brown);
+    line-height: 1.15;
+    margin-bottom: 1.2rem;
+    font-style: italic;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    max-width: 520px;
+    margin: 0 auto 2rem;
+    font-style: italic;
+  }
+
+  .hero-btn {
+    display: inline-block;
+    background: var(--dark-brown);
+    color: var(--white);
+    padding: 0.8rem 2.2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .hero-btn:hover {
+    background: var(--brown);
+    transform: translateY(-1px);
+  }
+
+  /* ── SECTION COMMONS ── */
+  section { padding: 4rem 2rem; }
+
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    color: var(--dark-brown);
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+
+  .section-intro {
+    color: var(--text-muted);
+    max-width: 580px;
+    margin-bottom: 2.5rem;
+    font-style: italic;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    text-align: center;
+    color: var(--warm-tan);
+    font-size: 1.5rem;
+    letter-spacing: 0.5rem;
+    padding: 0.5rem 0;
+  }
+
+  /* ── RECIPES ── */
+  #recipes { background: var(--white); }
+
+  .recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .recipe-card {
+    background: var(--cream);
+    border: 1.5px solid var(--warm-tan);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+
+  .recipe-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(92,61,46,0.1);
+  }
+
+  .recipe-thumb {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+  }
+
+  .recipe-thumb.tan  { background: #f0dfc4; }
+  .recipe-thumb.rose { background: #f0dada; }
+  .recipe-thumb.sage { background: #d8e5d3; }
+
+  .recipe-body { padding: 1.2rem 1.4rem; }
+
+  .recipe-tag {
+    display: inline-block;
+    background: var(--warm-tan);
+    color: var(--dark-brown);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.7rem;
+    border-radius: 50px;
+    margin-bottom: 0.6rem;
+  }
+
+  .recipe-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--dark-brown);
+    margin-bottom: 0.4rem;
+  }
+
+  .recipe-card p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  .recipe-meta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
+
+  /* ── GALLERY ── */
+  #gallery { background: var(--cream); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .gallery-item {
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+    border: 1.5px solid var(--warm-tan);
+  }
+
+  .gallery-item:hover { transform: scale(1.02); }
+  .gallery-item.span2 { grid-column: span 2; aspect-ratio: 2 / 1; }
+  .gallery-item.tall  { grid-row: span 2; aspect-ratio: 1 / 2; }
+
+  .g1 { background: #f0dfc4; }
+  .g2 { background: #e4d4c0; }
+  .g3 { background: #f0dada; }
+  .g4 { background: #d8e5d3; }
+  .g5 { background: #e8dcc8; }
+  .g6 { background: #f5e4d0; }
+
+  .gallery-caption {
+    text-align: center;
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-top: 1.2rem;
+  }
+
+  /* ── TIPS ── */
+  #tips { background: #f2e9dc; }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .tip-card {
+    background: var(--white);
+    border: 1.5px solid var(--warm-tan);
+    border-radius: 14px;
+    padding: 1.4rem 1.6rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: transform 0.15s;
+  }
+
+  .tip-card:hover { transform: translateY(-2px); }
+
+  .tip-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .tip-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--dark-brown);
+    margin-bottom: 0.3rem;
+  }
+
+  .tip-card p {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.55;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark-brown);
+    color: rgba(255,253,249,0.7);
+    text-align: center;
+    padding: 2.5rem 2rem;
+    font-size: 0.88rem;
+    font-style: italic;
+  }
+
+  footer .footer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--white);
+    font-style: italic;
+    margin-bottom: 0.5rem;
+  }
+
+  footer a {
+    color: var(--warm-tan);
+    text-decoration: none;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .nav-links { gap: 1rem; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-item.span2 { grid-column: span 1; aspect-ratio: 1; }
+    .gallery-item.tall  { grid-row: span 1; aspect-ratio: 1; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════
+     NAVIGATION
+     To add more links, copy one <li> and change the href and text.
+     The href="#section-id" format scrolls to that section on the page.
+════════════════════════════════ -->
+<nav>
+  <span class="nav-logo">🍞 Mom's Sourdough Kitchen</span>
+  <ul class="nav-links">
+    <li><a href="#recipes">Recipes</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#tips">Tips</a></li>
+  </ul>
+</nav>
+
+<!-- ════════════════════════════════
+     HERO SECTION
+     Edit the <h1> and <p> to change the headline and tagline.
+════════════════════════════════ -->
+<section class="hero">
+  <span class="hero-badge">Baked with love</span>
+  <h1>Mom's Sourdough<br>Kitchen</h1>
+  <p>Every loaf tells a story. Here's where we share hers — recipes handed down through warm kitchens and flour-dusted mornings.</p>
+  <a href="#recipes" class="hero-btn">Browse Recipes</a>
+</section>
+
+<div class="divider">✦ ✦ ✦</div>
+
+<!-- ════════════════════════════════
+     RECIPES SECTION
+     To add a recipe card, copy one <div class="recipe-card">…</div> block
+     and paste it inside .recipes-grid. Update the text and emoji.
+     Thumb color classes: tan | rose | sage
+════════════════════════════════ -->
+<section id="recipes">
+  <div style="max-width:1000px; margin:0 auto;">
+    <span class="section-label">From the kitchen</span>
+    <h2 class="section-title">Her Recipes</h2>
+    <p class="section-intro">Simple, soulful, and worth every hour of patience the starter demands.</p>
+
+    <div class="recipes-grid">
+
+      <div class="recipe-card">
+        <div class="recipe-thumb tan">🍞</div>
+        <div class="recipe-body">
+          <span class="recipe-tag">Classic</span>
+          <h3>The Everyday Sourdough</h3>
+          <p>The loaf she makes every Sunday. Crisp crust, open crumb, and that unmistakable tang.</p>
+          <div class="recipe-meta">
+            <span>⏱ 24 hrs</span>
+            <span>🌾 Intermediate</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-thumb rose">🫐</div>
+        <div class="recipe-body">
+          <span class="recipe-tag">Sweet</span>
+          <h3>Blueberry Sourdough Scones</h3>
+          <p>Tender, buttery scones with a sourdough twist. Perfect with a cup of morning tea.</p>
+          <div class="recipe-meta">
+            <span>⏱ 45 min</span>
+            <span>🌾 Beginner</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="recipe-card">
+        <div class="recipe-thumb sage">🌿</div>
+        <div class="recipe-body">
+          <span class="recipe-tag">Savory</span>
+          <h3>Rosemary Olive Focaccia</h3>
+          <p>Dimpled, herby, and soaked in olive oil. It disappears within minutes at family dinners.</p>
+          <div class="recipe-meta">
+            <span>⏱ 18 hrs</span>
+            <span>🌾 Beginner</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider">✦ ✦ ✦</div>
+
+<!-- ════════════════════════════════
+     PHOTO GALLERY SECTION
+     To add a real photo, replace an emoji tile like this:
+
+     BEFORE:
+       <div class="gallery-item g1">🍞</div>
+
+     AFTER:
+       <div class="gallery-item g1">
+         <img src="your-photo.jpg" alt="Description of photo"
+              style="width:100%; height:100%; object-fit:cover;">
+       </div>
+
+     The span2 class makes a tile 2 columns wide.
+     The tall class makes a tile 2 rows tall.
+════════════════════════════════ -->
+<section id="gallery">
+  <div style="max-width:900px; margin:0 auto;">
+    <span class="section-label">Moments in the kitchen</span>
+    <h2 class="section-title">Photo Gallery</h2>
+    <p class="section-intro">Add your own photos here by replacing these placeholder tiles — each one a memory worth keeping.</p>
+
+    <div class="gallery-grid">
+      <div class="gallery-item span2 g1">🍞</div>
+      <div class="gallery-item tall g2">🫙</div>
+      <div class="gallery-item g3">🌾</div>
+      <div class="gallery-item g4">🧈</div>
+      <div class="gallery-item g5">☕</div>
+      <div class="gallery-item g6">🌸</div>
+    </div>
+    <p class="gallery-caption">Replace the emoji tiles with real &lt;img&gt; tags as you add your own photos.</p>
+  </div>
+</section>
+
+<div class="divider">✦ ✦ ✦</div>
+
+<!-- ════════════════════════════════
+     TIPS & TRICKS SECTION
+     To add a tip, copy one <div class="tip-card">…</div> block
+     and paste it inside .tips-grid. Update the icon, heading, and text.
+════════════════════════════════ -->
+<section id="tips">
+  <div style="max-width:1000px; margin:0 auto;">
+    <span class="section-label">Wisdom from Mom</span>
+    <h2 class="section-title">Tips & Tricks</h2>
+    <p class="section-intro">Things she learned the hard way so you don't have to.</p>
+
+    <div class="tips-grid">
+
+      <div class="tip-card">
+        <div class="tip-icon">🫙</div>
+        <div>
+          <h3>Feed your starter consistently</h3>
+          <p>A happy starter gets fed at the same time every day. Think of it like a little pet — it rewards routine.</p>
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-icon">🌡️</div>
+        <div>
+          <h3>Temperature matters more than time</h3>
+          <p>A warm kitchen means a faster rise. A cool one means slower — but often more flavor. Learn to read your dough, not just the clock.</p>
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-icon">🤲</div>
+        <div>
+          <h3>Trust the stretch-and-fold</h3>
+          <p>You don't need to knead sourdough like bread dough. Gentle folds every 30 minutes build all the strength you need.</p>
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-icon">⏳</div>
+        <div>
+          <h3>Cold proof overnight</h3>
+          <p>Pop the shaped dough in the fridge before bed. A cold, slow proof develops richer flavor and makes scoring much easier.</p>
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-icon">🔪</div>
+        <div>
+          <h3>Score confidently and quickly</h3>
+          <p>A hesitant score drags the dough. One swift, decisive cut at an angle gives you that beautiful ear every time.</p>
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <div class="tip-icon">🎉</div>
+        <div>
+          <h3>Every failed loaf is a lesson</h3>
+          <p>Dense crumb? Under-proofed. Flat loaf? Weak starter. Mom keeps a little notebook — and now so should you.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     FOOTER
+     Update the name and contact link.
+════════════════════════════════ -->
+<footer>
+  <p class="footer-title">🍞 Mom's Sourdough Kitchen</p>
+  <p>Made with flour, time, and a whole lot of love.</p>
+  <p style="margin-top:0.5rem; font-size:0.8rem;">Your name here · <a href="mailto:you@example.com">Contact</a></p>
+</footer>
+
+</body>
+</html>
